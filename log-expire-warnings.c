@@ -154,7 +154,7 @@ static void
 x509_print_info(X509 *x509crt, const char *common_name, const char *filename, const int warn_days, plugin_log_t log)
 {
     ASN1_TIME *now_asn1time = NULL;
-    int day, sec;
+    int days, secs;
 
     log(PLOG_DEBUG, PLUGIN_NAME, "FUNC: x509_print_info");
     log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] Filename: [%s] warn_days: [%i]", common_name, filename, warn_days);
@@ -163,15 +163,16 @@ x509_print_info(X509 *x509crt, const char *common_name, const char *filename, co
 
     const ASN1_TIME *not_after_time = X509_get0_notAfter(x509crt);
 
-    ASN1_TIME_diff(&day, &sec, now_asn1time, not_after_time);
+    ASN1_TIME_diff(&days, &secs, now_asn1time, not_after_time);
 
-    if (day > warn_days)
+    if (days > warn_days)
     {
         return;
     }
     else
     {
         // time difference less than warn_days so notify
+    	log(PLOG_NOTE, PLUGIN_NAME, "The certificate of [%s] expires in [%i] days", common_name, days);
         notify_going_to_expire(now_asn1time, not_after_time, common_name, filename, log);
     }
 
