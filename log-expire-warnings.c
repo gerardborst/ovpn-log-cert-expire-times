@@ -72,6 +72,7 @@ openvpn_plugin_open_v3(const int v3structver,
     log(PLOG_NOTE, PLUGIN_NAME, "Version: [%s]", STRINGIZE_VALUE_OF(VERSION));
     log(PLOG_NOTE, PLUGIN_NAME, "Commit Hash: [%s]", STRINGIZE_VALUE_OF(COMMIT_HASH));
     log(PLOG_NOTE, PLUGIN_NAME, "Build Time: [%s]", STRINGIZE_VALUE_OF(BUILD_TIME));
+    log(PLOG_NOTE, PLUGIN_NAME, "Compile Type: [%s]", STRINGIZE_VALUE_OF(COMPILE_TYPE));
 
     /*  Which callbacks to intercept.  */
     retptr->type_mask = OPENVPN_PLUGIN_MASK(OPENVPN_PLUGIN_TLS_VERIFY);
