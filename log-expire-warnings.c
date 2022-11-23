@@ -117,7 +117,7 @@ static void
 notify_going_to_expire(ASN1_TIME *now_asn1time, const ASN1_TIME *not_after_time, const char *common_name, const char *filename, plugin_log_t log)
 {
     log(PLOG_DEBUG, PLUGIN_NAME, "FUNC: notify_going_to_expire");
-    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] FN: [%s]\n", common_name, filename);
+    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] Filename: [%s]", common_name, filename);
     BIO *out;
     out = BIO_new_file(filename, "a");
     if (!out)
@@ -157,7 +157,7 @@ x509_print_info(X509 *x509crt, const char *common_name, const char *filename, co
     int day, sec;
 
     log(PLOG_DEBUG, PLUGIN_NAME, "FUNC: x509_print_info");
-    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] FN: [%s] d: [%i]", common_name, filename, warn_days);
+    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] Filename: [%s] warn_days: [%i]", common_name, filename, warn_days);
 
     now_asn1time = ASN1_TIME_set(NULL, time(NULL));
 
@@ -196,7 +196,7 @@ openvpn_plugin_func_v3(const int version,
 
     	if (args->current_cert_depth == 0)
         {
-            const char *common_name = get_env("CN", args->argv);
+            const char *common_name = get_env("X509_0_CN", args->envp);
             const char *output_filename = context->output_filename;
             int warn_days = context->warn_days;
 
