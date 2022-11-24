@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../log-expire-warnings.c 
+../log-cert-expire-times.c 
 
 C_DEPS += \
-./log-expire-warnings.d 
+./log-cert-expire-times.d 
 
 OBJS += \
-./log-expire-warnings.o 
+./log-cert-expire-times.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -25,7 +25,7 @@ OBJS += \
 clean: clean--2e-
 
 clean--2e-:
-	-$(RM) ./log-expire-warnings.d ./log-expire-warnings.o
+	-$(RM) ./log-cert-expire-times.d ./log-cert-expire-times.o
 
 .PHONY: clean--2e-
 

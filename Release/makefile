@@ -23,7 +23,7 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := log-expire-warnings
+BUILD_ARTIFACT_NAME := log-cert-expire-times
 BUILD_ARTIFACT_EXTENSION := so
 BUILD_ARTIFACT_PREFIX := lib
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
@@ -34,19 +34,19 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 all: main-build
 
 # Main-build Target
-main-build: liblog-expire-warnings.so
+main-build: liblog-cert-expire-times.so
 
 # Tool invocations
-liblog-expire-warnings.so: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
+liblog-cert-expire-times.so: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -shared -o "liblog-expire-warnings.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -shared -o "liblog-cert-expire-times.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) liblog-expire-warnings.so
+	-$(RM) liblog-cert-expire-times.so
 	-@echo ' '
 
 .PHONY: all clean dependents main-build

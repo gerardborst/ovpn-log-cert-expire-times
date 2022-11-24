@@ -5,7 +5,7 @@ This project delivers a OpenVPN plugin which writes user and the not after time 
 Add this line to the OpenVPN server config file:
 
 ```
-plugin <directory with shared libs>/liblog-expire-warnings.so <log file> <number of days>
+plugin <directory with shared libs>/liblog-cert-expire-times.so <log file> <number of days>
 ```
 
 # Build and Test
