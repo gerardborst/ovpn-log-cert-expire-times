@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #include "openvpn-plugin.h"
 #include "x509.h"
@@ -9,6 +10,8 @@
 #define STRINGIZE_VALUE_OF(x) STRINGIZE(x)
 
 #define PLUGIN_NAME "log-cert-expire-times"
+
+#define TIME_SIZE 50
 
 /* Where we store our own settings/state */
 struct plugin_context
@@ -112,36 +115,38 @@ openvpn_plugin_open_v3(const int v3structver,
 static void
 x509_print_info(X509 *x509crt, const char *common_name, const char *filename, plugin_log_t log)
 {
+    struct tm tm;
+    char time_buffer[TIME_SIZE];
+    FILE *f;
+
     log(PLOG_DEBUG, PLUGIN_NAME, "FUNC: x509_print_info");
     log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] Filename: [%s]", common_name, filename);
 
     const ASN1_TIME *not_after_time = X509_get0_notAfter(x509crt);
-
     if (!not_after_time)
     {
         log(PLOG_ERR, PLUGIN_NAME, "[not_after_time] is null");
         return;
     }
 
-    BIO *out;
-    out = BIO_new_file(filename, "a");
-    if (!out)
+    // write not after time to log
+    if (!ASN1_TIME_to_tm(not_after_time, &tm))
     {
-    	log(PLOG_ERR, PLUGIN_NAME, "Error opening file [%s]", filename);
+    	log(PLOG_ERR, PLUGIN_NAME, "Error converting [not_after_time] to time");
         return;
     }
 
-    // write CN to file
-    BIO_printf(out, "%s,", common_name);
-    // write not after time to log
-    if (!ASN1_TIME_print(out, not_after_time))
-    {
-    	log(PLOG_ERR, PLUGIN_NAME, "Error writing time [not_after_time] to file [%s]", filename);
-            return;
-    }
-    BIO_printf(out, "\n");
+    // Feb 26 21:11:08 2023 GMT
+    strftime(time_buffer, TIME_SIZE, "%b %e %H:%M:%S %Y %Z", &tm);
 
-    BIO_free(out);
+	if (!(f = fopen(filename, "a"))) {
+		log(PLOG_ERR, PLUGIN_NAME, "Error opening file [%s]: %s", filename,
+				strerror(errno));
+		return;
+	}
+
+	fprintf(f, "%s,%s\n", common_name, time_buffer);
+	fclose(f);
 }
 
 OPENVPN_EXPORT int
