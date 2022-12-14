@@ -17,7 +17,6 @@
 struct plugin_context
 {
     plugin_log_t plugin_log;
-    const char *output_filename;
 };
 
 /*
@@ -79,30 +78,11 @@ openvpn_plugin_open_v3(const int v3structver,
     /*  Which callbacks to intercept.  */
     retptr->type_mask = OPENVPN_PLUGIN_MASK(OPENVPN_PLUGIN_TLS_VERIFY);
 
-    /*
-     *
-     * Note that if arg_size is 0 no script argument was included.
-     */
-    if (!(args->argv[1]))
-    {
-        log(PLOG_ERR, PLUGIN_NAME, "no output_filename argument on plugin in openvpn config file");
-        return OPENVPN_PLUGIN_FUNC_ERROR;
-    }
-
-    /*
-     * Plugin init will fail unless we create a handler, so we'll store our
-     * script path and it's arguments there as we have to create it anyway.
-     */
-    context = (struct plugin_context *)malloc(
-        sizeof(struct plugin_context) + strlen(args->argv[1]));
+    /* create context */
+    context = (struct plugin_context *)malloc(sizeof(struct plugin_context));
     memset(context, 0, sizeof(struct plugin_context));
-    memcpy(&context->output_filename, &args->argv[1], strlen(args->argv[1]));
 
     context->plugin_log = log;
-
-    log(PLOG_NOTE, PLUGIN_NAME,
-        "output_filename=%s",
-        context->output_filename);
 
     /* Pass state back to OpenVPN so we get handed it back later */
     retptr->handle = (openvpn_plugin_handle_t)context;
@@ -113,14 +93,13 @@ openvpn_plugin_open_v3(const int v3structver,
 }
 
 static void
-x509_print_info(X509 *x509crt, const char *common_name, const char *filename, plugin_log_t log)
+x509_print_info(X509 *x509crt, const char *common_name, plugin_log_t log)
 {
     struct tm tm;
     char time_buffer[TIME_SIZE];
-    FILE *f;
 
     log(PLOG_DEBUG, PLUGIN_NAME, "FUNC: x509_print_info");
-    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s] Filename: [%s]", common_name, filename);
+    log(PLOG_DEBUG, PLUGIN_NAME, "CN: [%s]", common_name);
 
     const ASN1_TIME *not_after_time = X509_get0_notAfter(x509crt);
     if (!not_after_time)
@@ -139,14 +118,7 @@ x509_print_info(X509 *x509crt, const char *common_name, const char *filename, pl
     // Feb 26 21:11:08 2023 GMT
     strftime(time_buffer, TIME_SIZE, "%b %e %H:%M:%S %Y %Z", &tm);
 
-	if (!(f = fopen(filename, "a"))) {
-		log(PLOG_ERR, PLUGIN_NAME, "Error opening file [%s]: %s", filename,
-				strerror(errno));
-		return;
-	}
-
-	fprintf(f, "%s,%s\n", common_name, time_buffer);
-	fclose(f);
+	log(PLOG_NOTE, PLUGIN_NAME, "Certificate of: user, not after |%s,%s|", common_name, time_buffer);
 }
 
 OPENVPN_EXPORT int
@@ -168,9 +140,8 @@ openvpn_plugin_func_v3(const int version,
     	if (args->current_cert_depth == 0)
         {
             const char *common_name = get_env("X509_0_CN", args->envp);
-            const char *output_filename = context->output_filename;
 
-            x509_print_info(args->current_cert, common_name, output_filename, log);
+            x509_print_info(args->current_cert, common_name, log);
         }
     }
 
