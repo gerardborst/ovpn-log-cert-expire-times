@@ -37,7 +37,7 @@
 									<listOptionValue builtIn="false" value="/usr/include/openvpn"/>
 									<listOptionValue builtIn="false" value="/usr/include/openssl"/>
 								</option>
-								<option id="gnu.c.compiler.option.misc.pic.1055426835" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.pic.1055426835" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.758248612" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ENABLE_CRYPTO=yes"/>
 									<listOptionValue builtIn="false" value="COMPILE_TYPE=Debug"/>
@@ -112,7 +112,7 @@
 									<listOptionValue builtIn="false" value="/usr/include/openvpn"/>
 									<listOptionValue builtIn="false" value="/usr/include/openssl"/>
 								</option>
-								<option id="gnu.c.compiler.option.misc.pic.1775154494" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.pic.1775154494" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1039630834" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.894025052" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release">

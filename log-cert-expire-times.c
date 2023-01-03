@@ -118,7 +118,7 @@ x509_print_info(X509 *x509crt, const char *common_name, plugin_log_t log)
     // Feb 26 21:11:08 2023 GMT
     strftime(time_buffer, TIME_SIZE, "%b %e %H:%M:%S %Y %Z", &tm);
 
-	log(PLOG_NOTE, PLUGIN_NAME, "Certificate of: user, not after |%s,%s|", common_name, time_buffer);
+    log(PLOG_NOTE, PLUGIN_NAME, "Certificate of: user, not after |%s,%s|", common_name, time_buffer);
 }
 
 OPENVPN_EXPORT int
