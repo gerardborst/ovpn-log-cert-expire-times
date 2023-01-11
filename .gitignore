@@ -1,3 +1,6 @@
 **/*.d
-**/*.so
+**/*.so*
 **/*.o
+/.cproject
+/.project
+/.settings/

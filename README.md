@@ -9,13 +9,10 @@ plugin <directory with shared libs>/liblog-cert-expire-times.so
 ```
 
 # Build and Test
-This project is an Eclipse CDT project.
-
-It also can be build with:
+It can be build with:
 
 ```
-cd [Debug|Release]
-make clean install
+make all
 ```
 
 # Contribute
