@@ -8,7 +8,7 @@ VERSION_TAG = $(shell git describe --tags --exact-match 2>/dev/null | cut -f 1 -
 
 # If no git tag is set, fallback to 'DEVELOPMENT'
 ifeq ($(strip ${VERSION_TAG}),)
-VERSION_TAG := Development
+VERSION_TAG := $(shell git rev-parse --abbrev-ref HEAD)
 endif
 
 CC ?= cc
@@ -21,12 +21,12 @@ OUT	= $(SRC:%.c=%.so)
 
 %.so: %.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o "liblog-cert-expire-times.so" $<
-	tar -czvf liblog-cert-expire-times-$(VERSION_TAG).linux-amd64.tar.gz liblog-cert-expire-times.so
+	tar -czvf log-cert-expire-times.linux-amd64.tar.gz liblog-cert-expire-times.so
 
 all: clean plugin
 
 plugin: $(OUT)
 
 clean:
-	rm -f *.so* *.d *.o 
+	rm -f *.so* *.d *.o *.tar.gz
 

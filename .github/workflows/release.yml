@@ -6,33 +6,26 @@ on:
     - '*'
 
 jobs:
-  build_release:
-
+  build:
+    uses: ./.github/workflows/build.yml
+    
+  release:
     runs-on: ubuntu-latest
-
+    needs: build
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: build
-      run: make plugin
+    - uses: actions/download-artifact@v3
+      with:
+        name: liblog-cert-expire-times
     - name: release
-      uses: actions/create-release@v1
+      uses: ncipollo/release-action@v1
       id: create_release
       with:
-        draft: false
-        prerelease: false
-        release_name: ${{ github.ref }}
-        tag_name: ${{ github.ref }}
-        body_path: CHANGELOG.md
-      env:
-          GITHUB_TOKEN: ${{ github.token }}
-    - name: upload linux artifact
-      uses: actions/upload-release-asset@v1
+        artifacts: "log-cert-expire-times.linux-amd64.tar.gz,sha256sum.txt"
+        bodyFile: CHANGELOG.md
+        allowUpdates: true
+        removeArtifacts: true
       env:
         GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./liblog-cert-expire-times.so.tar.gz
-        asset_name: liblog-cert-expire-times.so.tar.gz
-        asset_content_type: application/gzip
