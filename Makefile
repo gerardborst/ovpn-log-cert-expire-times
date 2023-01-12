@@ -1,4 +1,4 @@
-
+ARCH=amd64
 COMMIT_HASH=$(shell git rev-parse --short=8 HEAD 2>/dev/null)
 BUILD_TIME=$(shell date +%FT%T%z)
 
@@ -12,15 +12,16 @@ VERSION_TAG := Development
 endif
 
 CC ?= cc
-CFLAGS ?= -O -Wall -D_FORTIFY_SOURCE=2 -Wextra -Wformat-security 
-CFLAGS += -DENABLE_CRYPTO=yes -DBUILD_TIME=$(BUILD_TIME) -DVERSION=$(VERSION_TAG) -DCOMMIT_HASH=$(COMMIT_HASH) -I/usr/include/openvpn -I/usr/include/openssl -O3 -fmessage-length=0 -fPIC
+CFLAGS ?= -O -Wall -D_FORTIFY_SOURCE=2 -Wextra -Wformat-security
+CFLAGS += -DENABLE_CRYPTO=yes -DBUILD_TIME=$(BUILD_TIME) -DVERSION=$(VERSION_TAG) -DCOMMIT_HASH=$(COMMIT_HASH) -I. -I/usr/include/openvpn -I/usr/include/openssl -O3 -fmessage-length=0 -fPIC
 LDFLAGS += -shared
 
 SRC 	= $(wildcard *.c)
 OUT	= $(SRC:%.c=%.so)
 
 %.so: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o "liblog-cert-expire-times.so.$(VERSION_TAG)" $<
+	$(CC) $(CFLAGS) $(LDFLAGS) -o "liblog-cert-expire-times.so" $<
+	tar -czvf liblog-cert-expire-times-$(VERSION_TAG).linux-amd64.tar.gz liblog-cert-expire-times.so
 
 all: clean plugin
 

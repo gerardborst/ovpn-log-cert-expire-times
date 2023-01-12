@@ -1,6 +1,7 @@
 **/*.d
 **/*.so*
 **/*.o
+**/*.tar.gz
 /.cproject
 /.project
 /.settings/
