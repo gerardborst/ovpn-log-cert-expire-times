@@ -27,5 +27,3 @@ jobs:
         bodyFile: CHANGELOG.md
         allowUpdates: true
         removeArtifacts: true
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
