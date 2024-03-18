@@ -1,5 +1,6 @@
 ## main / unreleased
 
+* [CHANGE] Rename to ovpn-log-cert-expire-times
 * [CHANGE] Remove github token reference
 * [FEATURE]
 * [ENHANCEMENT]

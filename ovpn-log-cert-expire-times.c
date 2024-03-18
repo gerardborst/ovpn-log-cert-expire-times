@@ -9,7 +9,7 @@
 #define STRINGIZE(x) #x
 #define STRINGIZE_VALUE_OF(x) STRINGIZE(x)
 
-#define PLUGIN_NAME "log-cert-expire-times"
+#define PLUGIN_NAME "ovpn-log-cert-expire-times"
 
 #define TIME_SIZE 50
 

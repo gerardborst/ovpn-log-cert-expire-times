@@ -20,8 +20,8 @@ SRC 	= $(wildcard *.c)
 OUT	= $(SRC:%.c=%.so)
 
 %.so: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o "liblog-cert-expire-times.so" $<
-	tar -czvf log-cert-expire-times.linux-amd64.tar.gz liblog-cert-expire-times.so
+	$(CC) $(CFLAGS) $(LDFLAGS) -o "libovpn-log-cert-expire-times.so" $<
+	tar -czvf ovpn-log-cert-expire-times.linux-amd64.tar.gz libovpn-log-cert-expire-times.so
 
 all: clean plugin
 

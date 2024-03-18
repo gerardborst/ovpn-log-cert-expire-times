@@ -20,11 +20,11 @@ jobs:
     - name: build
       run: |
         make plugin
-        sha256sum log-cert-expire-times.linux-amd64.tar.gz > sha256sum.txt    
+        sha256sum ovpn-log-cert-expire-times.linux-amd64.tar.gz > sha256sum.txt    
     - uses: actions/upload-artifact@v3
       with:
-        name: liblog-cert-expire-times
+        name: libovpn-log-cert-expire-times
         path: |
-          ./log-cert-expire-times.linux-amd64.tar.gz
+          ./ovpn-log-cert-expire-times.linux-amd64.tar.gz
           ./sha256sum.txt
         if-no-files-found: error

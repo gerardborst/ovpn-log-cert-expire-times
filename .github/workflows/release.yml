@@ -18,12 +18,12 @@ jobs:
         fetch-depth: 0
     - uses: actions/download-artifact@v3
       with:
-        name: liblog-cert-expire-times
+        name: libovpn-log-cert-expire-times
     - name: release
       uses: ncipollo/release-action@v1
       id: create_release
       with:
-        artifacts: "log-cert-expire-times.linux-amd64.tar.gz,sha256sum.txt"
+        artifacts: "ovpn-log-cert-expire-times.linux-amd64.tar.gz,sha256sum.txt"
         bodyFile: CHANGELOG.md
         allowUpdates: true
         removeArtifacts: true

@@ -5,7 +5,7 @@ This project delivers a OpenVPN plugin which writes user and the certificate not
 Add this line to the OpenVPN server config file:
 
 ```
-plugin <directory with shared libs>/liblog-cert-expire-times.so
+plugin <directory with shared libs>/libovpn-log-cert-expire-times.so
 ```
 
 # Build and Test
