@@ -1,9 +1,6 @@
-## main / unreleased
+## 1.0.11 / 2024-03-18
 
 * [CHANGE] Update to Node.js 20
-* [FEATURE]
-* [ENHANCEMENT]
-* [BUGFIX]
 
 ## 1.0.10 / 2024-03-18
 
